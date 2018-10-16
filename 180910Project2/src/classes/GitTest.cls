@@ -1,3 +1,5 @@
 public with sharing class GitTest {
-    system.debug('working here');
+	public static void GitWorkingTest(){
+    	system.debug('working here');
+	}
 }
