@@ -1,0 +1,172 @@
+!SESSION 2018-10-16 13:49:58.876 -----------------------------------------------
+eclipse.buildId=4.6.3.M20170301-0400
+java.version=1.8.0_181
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product -data C:\Users\Cody\Documents\Git Repos\NotWebMD -product org.eclipse.epp.package.jee.product
+
+!ENTRY mega.js.tern 1 0 2018-10-16 13:50:25.663
+!MESSAGE Started Node.js v5.9.1 (V8 v4.6.85.31) in 1.565 s
+
+!ENTRY mega.js.tern 1 0 2018-10-16 13:50:26.119
+!MESSAGE Loading tern.js...
+
+
+!ENTRY mega.js.tern 1 0 2018-10-16 13:50:26.133
+!MESSAGE Loading library ecma5
+
+
+!ENTRY mega.js.tern 1 0 2018-10-16 13:50:26.155
+!MESSAGE Loading library browser
+
+
+!ENTRY mega.js.tern 1 0 2018-10-16 13:50:26.179
+!MESSAGE Loading library ecma6
+
+
+!ENTRY mega.js.tern 1 0 2018-10-16 13:50:26.196
+!MESSAGE Loading plugin doc_comment
+
+
+!ENTRY mega.js.tern 1 0 2018-10-16 13:50:26.246
+!MESSAGE Loading plugin aura
+
+
+!ENTRY mega.js.tern 1 0 2018-10-16 13:50:27.850
+!MESSAGE Tern.js (0.19.0) ready
+
+
+!ENTRY org.eclipse.egit.ui 2 0 2018-10-16 13:51:01.868
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Cody'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY mega.js.tern 1 0 2018-10-16 13:51:11.992
+!MESSAGE ':core' project is not available. Please add '<module>:core</module>' to your list of partial build modules. If using para, set 'ide-search-all-files: true' and run 'para refresh'
+
+!ENTRY mega.js.tern 1 0 2018-10-16 13:51:12.037
+!MESSAGE Analyzed Lightning System JavaScript Support in 16.06 ms
+
+!ENTRY org.eclipse.jface.text 2 0 2018-10-16 13:52:57.925
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2018-10-16 13:52:57.951
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
+
+!ENTRY com.salesforce.ide.core 2 0 2018-10-16 13:54:04.212
+!MESSAGE  WARN [2018-10-16 13:54:04,195] (ComponentResource.java:loadFromFile:430) - File 'src/package.xml' does not exist
+
+
+!ENTRY com.salesforce.ide.core 2 0 2018-10-16 13:55:29.639
+!MESSAGE  WARN [2018-10-16 13:55:29,635] (ComponentFactory.java:getCompositeComponentFromComponent:975) - Unable to load existing 'classes/GitTest.cls-meta.xml' from project - associated component's file resource is null.  Assuming new.
+
+
+!ENTRY com.salesforce.ide.core 2 0 2018-10-16 13:55:30.094
+!MESSAGE  WARN [2018-10-16 13:55:30,091] (ComponentController.java:deploy:443) - Remote save aborted - project is not online enabled
+
+
+!ENTRY com.salesforce.ide.core 2 0 2018-10-16 13:55:30.139
+!MESSAGE  WARN [2018-10-16 13:55:30,130] (Utils.java:loadDocument:807) - Unable to load document: C:\Users\Cody\Documents\Git Repos\NotWebMD\.metadata\.plugins\org.eclipse.core.resources\.projects\180910Project2\com.salesforce.ide.core\packageCache.xml (The system cannot find the file specified)
+
+
+!ENTRY com.salesforce.ide.core 2 0 2018-10-16 13:55:30.166
+!MESSAGE  WARN [2018-10-16 13:55:30,163] (ComponentController.java:run:421) - Unable to update cache with new component Apex Class - cache is not found
+
+
+!ENTRY com.salesforce.ide.core 2 0 2018-10-16 13:55:30.308
+!MESSAGE  WARN [2018-10-16 13:55:30,305] (DefaultBuilder.java:applyDirtyMarkers:93) - TODO: apply 'Save locally only...' markers on each resource
+
+
+!ENTRY com.salesforce.ide.ui.editors 4 2 2018-10-16 13:55:42.768
+!MESSAGE Problems occurred when invoking code from plug-in: "com.salesforce.ide.ui.editors".
+!STACK 0
+java.lang.NullPointerException
+	at apex.jorje.semantic.ast.member.MethodFactory.createUserMethod(MethodFactory.java:53)
+	at apex.jorje.semantic.ast.compilation.UserClassMembers$Builder._case(UserClassMembers.java:308)
+	at apex.jorje.data.ast.BlockMember$MethodMember._switch(BlockMember.java:374)
+	at apex.jorje.semantic.ast.compilation.UserClassMembers.create(UserClassMembers.java:191)
+	at apex.jorje.semantic.ast.compilation.UserClass.<init>(UserClass.java:88)
+	at apex.jorje.semantic.ast.AstNodeFactory$3._case(AstNodeFactory.java:392)
+	at apex.jorje.semantic.ast.AstNodeFactory$3._case(AstNodeFactory.java:374)
+	at apex.jorje.data.ast.CompilationUnit$ClassDeclUnit.match(CompilationUnit.java:371)
+	at apex.jorje.semantic.ast.AstNodeFactory.create(AstNodeFactory.java:373)
+	at apex.jorje.semantic.compiler.CodeUnit.parse(CodeUnit.java:85)
+	at apex.jorje.semantic.compiler.CompilerStage$1.invoke(CompilerStage.java:38)
+	at apex.jorje.semantic.compiler.ApexCompiler.processNext(ApexCompiler.java:164)
+	at apex.jorje.semantic.compiler.ApexCompiler.compileInternal(ApexCompiler.java:98)
+	at apex.jorje.semantic.compiler.ApexCompiler.compile(ApexCompiler.java:86)
+	at com.salesforce.ide.apex.internal.core.CompilerService.compile(CompilerService.java:159)
+	at com.salesforce.ide.apex.internal.core.CompilerService.visitAstsFromStrings(CompilerService.java:144)
+	at com.salesforce.ide.apex.internal.core.CompilerService.visitAstFromString(CompilerService.java:117)
+	at com.salesforce.ide.ui.editors.apex.ApexParserRunnable.parseCurrentEditorContents(ApexParserRunnable.java:77)
+	at com.salesforce.ide.ui.editors.apex.ApexParserRunnable.run(ApexParserRunnable.java:58)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at com.salesforce.ide.ui.editors.apex.ApexReconcilingStrategy.reconcile(ApexReconcilingStrategy.java:62)
+	at com.salesforce.ide.ui.editors.apex.ApexReconcilingStrategy.reconcile(ApexReconcilingStrategy.java:58)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:73)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY com.salesforce.ide.ui.editors 4 2 2018-10-16 13:55:46.851
+!MESSAGE Problems occurred when invoking code from plug-in: "com.salesforce.ide.ui.editors".
+!STACK 0
+java.lang.NullPointerException
+	at apex.jorje.semantic.ast.member.MethodFactory.createUserMethod(MethodFactory.java:53)
+	at apex.jorje.semantic.ast.compilation.UserClassMembers$Builder._case(UserClassMembers.java:308)
+	at apex.jorje.data.ast.BlockMember$MethodMember._switch(BlockMember.java:374)
+	at apex.jorje.semantic.ast.compilation.UserClassMembers.create(UserClassMembers.java:191)
+	at apex.jorje.semantic.ast.compilation.UserClass.<init>(UserClass.java:88)
+	at apex.jorje.semantic.ast.AstNodeFactory$3._case(AstNodeFactory.java:392)
+	at apex.jorje.semantic.ast.AstNodeFactory$3._case(AstNodeFactory.java:374)
+	at apex.jorje.data.ast.CompilationUnit$ClassDeclUnit.match(CompilationUnit.java:371)
+	at apex.jorje.semantic.ast.AstNodeFactory.create(AstNodeFactory.java:373)
+	at apex.jorje.semantic.compiler.CodeUnit.parse(CodeUnit.java:85)
+	at apex.jorje.semantic.compiler.CompilerStage$1.invoke(CompilerStage.java:38)
+	at apex.jorje.semantic.compiler.ApexCompiler.processNext(ApexCompiler.java:164)
+	at apex.jorje.semantic.compiler.ApexCompiler.compileInternal(ApexCompiler.java:98)
+	at apex.jorje.semantic.compiler.ApexCompiler.compile(ApexCompiler.java:86)
+	at com.salesforce.ide.apex.internal.core.CompilerService.compile(CompilerService.java:159)
+	at com.salesforce.ide.apex.internal.core.CompilerService.visitAstsFromStrings(CompilerService.java:144)
+	at com.salesforce.ide.apex.internal.core.CompilerService.visitAstFromString(CompilerService.java:117)
+	at com.salesforce.ide.ui.editors.apex.ApexParserRunnable.parseCurrentEditorContents(ApexParserRunnable.java:77)
+	at com.salesforce.ide.ui.editors.apex.ApexParserRunnable.run(ApexParserRunnable.java:58)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at com.salesforce.ide.ui.editors.apex.ApexReconcilingStrategy.reconcile(ApexReconcilingStrategy.java:62)
+	at com.salesforce.ide.ui.editors.apex.ApexReconcilingStrategy.reconcile(ApexReconcilingStrategy.java:58)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:73)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY com.salesforce.ide.core 2 0 2018-10-16 13:55:48.801
+!MESSAGE  WARN [2018-10-16 13:55:48,798] (DefaultBuilder.java:applyDirtyMarkers:93) - TODO: apply 'Save locally only...' markers on each resource
+
+
+!ENTRY com.salesforce.ide.ui.editors 4 2 2018-10-16 13:55:48.877
+!MESSAGE Problems occurred when invoking code from plug-in: "com.salesforce.ide.ui.editors".
+!STACK 0
+java.lang.NullPointerException
+	at apex.jorje.semantic.ast.member.MethodFactory.createUserMethod(MethodFactory.java:53)
+	at apex.jorje.semantic.ast.compilation.UserClassMembers$Builder._case(UserClassMembers.java:308)
+	at apex.jorje.data.ast.BlockMember$MethodMember._switch(BlockMember.java:374)
+	at apex.jorje.semantic.ast.compilation.UserClassMembers.create(UserClassMembers.java:191)
+	at apex.jorje.semantic.ast.compilation.UserClass.<init>(UserClass.java:88)
+	at apex.jorje.semantic.ast.AstNodeFactory$3._case(AstNodeFactory.java:392)
+	at apex.jorje.semantic.ast.AstNodeFactory$3._case(AstNodeFactory.java:374)
+	at apex.jorje.data.ast.CompilationUnit$ClassDeclUnit.match(CompilationUnit.java:371)
+	at apex.jorje.semantic.ast.AstNodeFactory.create(AstNodeFactory.java:373)
+	at apex.jorje.semantic.compiler.CodeUnit.parse(CodeUnit.java:85)
+	at apex.jorje.semantic.compiler.CompilerStage$1.invoke(CompilerStage.java:38)
+	at apex.jorje.semantic.compiler.ApexCompiler.processNext(ApexCompiler.java:164)
+	at apex.jorje.semantic.compiler.ApexCompiler.compileInternal(ApexCompiler.java:98)
+	at apex.jorje.semantic.compiler.ApexCompiler.compile(ApexCompiler.java:86)
+	at com.salesforce.ide.apex.internal.core.CompilerService.compile(CompilerService.java:159)
+	at com.salesforce.ide.apex.internal.core.CompilerService.visitAstsFromStrings(CompilerService.java:144)
+	at com.salesforce.ide.apex.internal.core.CompilerService.visitAstFromString(CompilerService.java:117)
+	at com.salesforce.ide.ui.editors.apex.ApexParserRunnable.parseCurrentEditorContents(ApexParserRunnable.java:77)
+	at com.salesforce.ide.ui.editors.apex.ApexParserRunnable.run(ApexParserRunnable.java:58)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at com.salesforce.ide.ui.editors.apex.ApexReconcilingStrategy.reconcile(ApexReconcilingStrategy.java:62)
+	at com.salesforce.ide.ui.editors.apex.ApexReconcilingStrategy.reconcile(ApexReconcilingStrategy.java:58)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:73)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
