@@ -1,0 +1,78 @@
+<apex:page showHeader="false" standardStylesheets="false" controller="EDiagnoseController">
+    <apex:stylesheet value="{!URLFOR($Resource.Styles)}"/>
+    <div id="main">
+        <div class="moduleContainer">
+           
+            <!-- Start Select a Doctor by State Module -->
+            <div class="module">
+                <fieldset class="schedulerBorder">
+                    <legend class="schedulerBorder">Select a Doctor by State</legend>
+                    <div id="stateContent" style="width:50%;"> 
+                        <h2>Select State</h2>
+                        <p>Choose state which your healthcare plan applies</p>
+                        <h5>Filter providers based on location</h5>
+                        <apex:form >
+                            <apex:selectList value="{!state}" size="1" multiselect="false">
+                                <apex:selectOptions value="{!ListOfStates}" />
+                            </apex:selectList>
+                            <apex:commandLink action="{!continueToNextPage}" value="Continue" id="homepageStateModule" styleClass="continueButton"/>
+                        </apex:form>
+                    </div>
+                    <div id="usaMap">
+                        <apex:image id="usaMap" value="{!$Resource.MapOfUSA}" width="250" height="250" alt="Blank Map of the Unites States of America"/>
+                    </div>
+                </fieldset>
+            </div>
+            <!-- End Select a Doctor by State Module -->
+            
+            <!-- Start Symptom Diagnosis Module -->
+            <div class="module">
+                <fieldset class="schedulerBorder">
+                    <legend class="schedulerBorder">Symptom Diagnosis</legend>
+                    <div class="moduleMainText">
+                        <p>
+                            Our state of the art Symptom Diagnosis is a tool which users can use to obtain information.
+                            Users of this module have the ability to select one or many sumptoms to determine possible diagnosis.
+                        </p>
+                    </div>
+                    <div class="moduleSubText">
+                        <p>
+                            <strong>This module does not provide medical advice but instead refers users to
+                                the correct provider to address their medical situation.</strong>
+                        </p>                       
+                    </div>
+                    <div>
+                        <apex:form >
+                            <apex:commandLink action="{!continueToNextPage}" value="Enter Diagnosis Module" id="homepageDiagnosisModule" styleClass="continueButton"/>
+                        </apex:form>                   
+                    </div>
+                </fieldset>
+            </div>
+            <!-- End Symptom Diagnosis Module -->
+            
+            <!-- Start Suggested Doctor Module -->
+            <div class="module">
+                <fieldset class="schedulerBorder">
+                    <legend class="schedulerBorder">Suggested Doctor</legend>
+                    <div class="moduleMainText">
+                        <p>
+                            This module allows users to better identigy the correct doctor given a particular diagnosis.
+                        </p>
+                    </div>
+                    <div class="moduleSubText">
+                        <p>
+                            Reference to the correct providers limits the number of visits that an individual will spend and 
+                            improves the speed at whcih an ailment can be treated.
+                        </p>                       
+                    </div>
+                    <div>
+                        <apex:form >
+                            <apex:commandLink action="{!continueToNextPage}" value="Enter Doctor Module" id="homepageDoctorModule" styleClass="continueButton"/>
+                        </apex:form>                   
+                    </div>
+                </fieldset>
+            </div>
+            <!-- End Suggested Doctor Module -->
+        </div>
+    </div>
+</apex:page>
