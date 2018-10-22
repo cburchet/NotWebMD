@@ -19,7 +19,7 @@
                         </apex:form>
                     </div>
                     <div id="usaMap">
-                        <apex:image id="usaMap" value="{!$Resource.MapOfUSA}" width="250" height="250" alt="Blank Map of the Unites States of America"/>
+                        <apex:image id="usaMap" value="{!$Resource.MapOfUSA}" height="250" alt="Blank Map of the Unites States of America"/>
                     </div>
                 </fieldset>
             </div>
