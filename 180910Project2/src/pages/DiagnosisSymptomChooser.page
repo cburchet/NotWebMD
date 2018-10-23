@@ -2,6 +2,9 @@
     <apex:stylesheet value="{!URLFOR($Resource.Styles)}"/>
     <div id="main">
         <div class="moduleContainer">
+            <h1>
+                Symptom Diagnosis
+            </h1>
             <!-- Start Choose Symptoms Module -->
             <div class="module">
                 <div class="moduleMainText">
@@ -20,7 +23,6 @@
                         <apex:form >
                             <apex:repeat value="{!possibleSymptoms}" var="s">
                                 <apex:commandButton action="{!addSymptomToList}" reRender="diagnosisSymptoms" value="{!s.Name}">
-                                    <apex:param name="symptomName" value="{!s.Name}"/>
                                     <apex:param name="symptomApiId" value="{!s.InfermediaID__c}"/>
                                 </apex:commandButton>
                             </apex:repeat>
