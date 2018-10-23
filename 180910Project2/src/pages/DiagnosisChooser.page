@@ -1,0 +1,8 @@
+<apex:page showHeader="false" standardStylesheets="false" controller="EDiagnoseController">
+    <apex:stylesheet value="{!URLFOR($Resource.Styles)}"/>
+    <div id="main">
+        <div class="moduleContainer">
+        	
+        </div>
+    </div>
+</apex:page>

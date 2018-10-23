@@ -5,6 +5,56 @@ public class EDiagnoseController {
     public Integer age {get; set;}
     public String gender {get; set;}
     
+    // Diagnosis module properties
+    public List<Symptom__c> patientSymptoms {
+        get {
+            if (patientSymptoms == null) {
+                patientSymptoms = new List<Symptom__c>();
+            }
+            return patientSymptoms;
+        }
+        set;
+    }
+    public List<Condition__c> possibleConditions {
+        get {
+            if (possibleConditions == null) {
+                possibleConditions = new List<Condition__c>();
+            }
+            return possibleConditions;
+        }
+        set;
+    }
+    public String symptomQuery {
+        get {
+            if (symptomQuery == null) {
+                symptomQuery = '';
+            }
+            return symptomQuery;
+        }
+        set;
+    }
+    public List<Symptom__c> possibleSymptoms {
+        get {
+            if (possibleSymptoms == null) {
+                possibleSymptoms = new List<Symptom__c>();
+            }
+            return possibleSymptoms;
+        }
+        set;
+    }
+    // Diagnosis module dummy data
+    public static final List<Symptom__c> dummySymptoms = new List<Symptom__c> {
+        new Symptom__c(InfermediaID__c = 't1', Name = 'Symptom 1'),
+        new Symptom__c(InfermediaID__c = 't2', Name = 'Symptom 2'),
+        new Symptom__c(InfermediaID__c = 't3', Name = 'Symptom 3'),
+        new Symptom__c(InfermediaID__c = 't4', Name = 'Symptom 4'),
+        new Symptom__c(InfermediaID__c = 't5', Name = 'Symptom 5'),
+        new Symptom__c(InfermediaID__c = 't6', Name = 'Symptom 6'),
+        new Symptom__c(InfermediaID__c = 't7', Name = 'Symptom 7'),
+        new Symptom__c(InfermediaID__c = 't8', Name = 'Symptom 8'),
+        new Symptom__c(InfermediaID__c = 't9', Name = 'Symptom 9')
+    };
+    
     public List<SelectOption> getListOfStates(){
         List<SelectOption> options = new List<SelectOption>();
 		options.add(new SelectOption('Alabama','Alabama'));
@@ -62,5 +112,34 @@ public class EDiagnoseController {
     
     public PageReference continueToNextPage(){
         return Page.Homepage;
+    }
+    
+    // Diagnosis Module methods
+    public PageReference symptomChooserContinueToNextPage() {
+        return Page.DiagnosisChooser;
+    }
+    public PageReference diagnosisChooserContinueToNextPage() {
+        //TODO: set correct page reference
+        return Page.DiagnosisChooser;
+    }
+    public void searchSymptoms() {
+        //TODO: search database with SOSL
+        possibleSymptoms.clear();
+        for (Symptom__c s : dummySymptoms) {
+            if (s.Name.containsIgnoreCase(symptomQuery)) {
+                possibleSymptoms.add(s);
+            }
+        }
+    }
+    public void addSymptomToList() {
+        String symptomName = ApexPages.currentPage().getParameters().get('symptomName');
+        String symptomApiId = ApexPages.currentPage().getParameters().get('symptomApiId');
+        for (Integer i = 0; i < possibleSymptoms.size(); i++) {
+            if (possibleSymptoms[i].Name == symptomName) {
+                patientSymptoms.add(possibleSymptoms[i]);
+                possibleSymptoms.remove(i);
+                break;
+            }
+        }
     }
 }
