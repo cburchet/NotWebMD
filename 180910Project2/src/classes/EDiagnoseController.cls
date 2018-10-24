@@ -4,6 +4,46 @@ public class EDiagnoseController {
     public Boolean hasUsedSymptomDiagnosisMachine {get; set;}
     public Integer age {get; set;}
     public String gender {get; set;}
+    public String currentCondition {get;set;}	//condition that user has chosen, used to pass condition to be displayed in VF page
+    
+    public List<Condition__c> allConditions{
+        get{
+            //if no conditions have been passed in from previous module gather list of all conditions (limit?)
+            if (allConditions == null){
+                allConditions = new List<Condition__c>();
+                allConditions.add(new Condition__c(name='Common Cold', InfermedicaID__c = '20'));
+                allConditions.add(new Condition__c(name='Mono', InfermedicaID__c = '22'));
+                allConditions.add(new Condition__c(name='Apnea', InfermedicaID__c = '23'));
+                allConditions.add([select id, name, InfermedicaId__c from condition__c where name = 'Flu' limit 1]);
+            }
+                return allConditions;
+    	}
+    	set;
+    }
+    
+    public Condition__c chosenCondition{
+        get{
+            //default to common cold (or none?) if no chosen condition passed in
+            if (chosenCondition == null){
+                chosenCondition = new Condition__c(name='Common Cold', InfermedicaID__c = '20');
+            }
+            return chosenCondition;
+        }	
+        set;
+    }
+    
+    //function invoked by user select a condition's commandButton
+    public void UserChoseCondition(){
+        SetChosenCondition();
+        //todo: function to get doctors of chosen condition
+    }
+    
+    public void SetChosenCondition(){
+        Condition__c cond = [select id, name, InfermedicaID__c from condition__c where id = :currentCondition];
+        chosenCondition = allConditions.get(allConditions.indexOf(cond));
+    }
+    
+    public List<Doctor__c> listOfDoctor{get;set;}
     
     public List<SelectOption> getListOfStates(){
         List<SelectOption> options = new List<SelectOption>();
