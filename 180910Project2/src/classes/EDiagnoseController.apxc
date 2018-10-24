@@ -1,19 +1,63 @@
 public class EDiagnoseController {
-    
     public String state {get; set;}
     public Boolean hasUsedSymptomDiagnosisMachine {get; set;}
     public Integer age {get; set;}
     public String gender {get; set;}
+    public Doctor__c currentDoctor {get; set;}
+    
     public List<Doctor__c> doctors {
         get{
-            if(this.doctors == null){
-                doctors = [SELECT Name, State__c FROM Doctor__c];
+            // Temporary  switch to hard-code the populating of the doctors.
+            switch on this.state {
+                when 'Virgninia' {
+                    this.doctors = populateVADoctors();
+                }
+                when 'Pennsylvania' {
+                    this.doctors = populatePADoctors();
+                }
+                when 'California' {
+                    this.doctors = populateCADoctors();
+                }
+                when else {
+                    this.doctors = populateVADoctors();
+                }
             }
-            return this.doctors;
+			return this.doctors;
         } 
-        set{}
+        set{doctors = value;}
+    }
+     
+    // This doesn't currently do anything other than call the get property for this.doctors which hard-codes the list of doctors.
+    // Once back end development has started, this will query the necessary doctors
+    public void filterDoctors(){
+        List<Doctor__c> docs = new List<Doctor__c>();
+        this.doctors = docs;
     }
     
+    // The three below populateDoctor methods are temporary. Used for Front End testing.
+    private List<Doctor__c> populateVADoctors(){
+        List<Doctor__c> docs = new List<Doctor__c>();
+        docs.add(new Doctor__c(Name='Dr.Ailment', Phone_Number__c='000 000 0000', State__c='Virginia', City__c='Reston', Street_Address__c='1234 W St', Suite_No__c=101));
+        docs.add(new Doctor__c(Name='Dr.Bones', Phone_Number__c='000 000 0000', State__c='Virginia', City__c='Reston', Street_Address__c='1234 N St', Suite_No__c=101));
+        docs.add(new Doctor__c(Name='Dr.Chicklet', Phone_Number__c='000 000 0000', State__c='Virginia', City__c='Herndon', Street_Address__c='1234 E St', Suite_No__c=101));
+    	return docs;
+    }
+    
+    private List<Doctor__c> populatePADoctors(){
+        List<Doctor__c> docs = new List<Doctor__c>();
+        docs.add(new Doctor__c(Name='Dr.Diagnosis', Phone_Number__c='000 000 0000', State__c='Pennsylvania', City__c='Philadelphia', Street_Address__c='1234 W St', Suite_No__c=101));
+        docs.add(new Doctor__c(Name='Dr.Effiel', Phone_Number__c='000 000 0000', State__c='Pennsylvania', City__c='Philadelphia', Street_Address__c='1234 S St', Suite_No__c=101));
+        return docs;
+    }
+    
+    private List<Doctor__c> populateCADoctors(){
+        List<Doctor__c> docs = new List<Doctor__c>();
+        docs.add(new Doctor__c(Name='Dr.Filament', Phone_Number__c='000 000 0000', State__c='California', City__c='Los Angelos', Street_Address__c='1234 E St', Suite_No__c=101));
+        docs.add(new Doctor__c(Name='Dr.Gastro', Phone_Number__c='000 000 0000', State__c='California', City__c='Los Angelos', Street_Address__c='1234 E St', Suite_No__c=101));
+        return docs;
+    }
+    
+    // Populate dropdown list of states
     public List<SelectOption> getListOfStates(){
         List<SelectOption> options = new List<SelectOption>();
 		options.add(new SelectOption('Alabama','Alabama'));
@@ -69,7 +113,30 @@ public class EDiagnoseController {
         return options;
     }
     
-    public PageReference continueToNextPage(){
-        return Page.Homepage;
+    
+    // Redirect user to Book An Appointment Module
+    public PageReference toAppointment(){
+        return Page.StatePage;
     }
+    
+    // Redirect user to State Page
+    public PageReference toStatePage(){
+        return Page.StatePage;
+    }
+    
+    // Redirect user to Home Page
+    public PageReference toHomePage(){
+        return Page.HomePage;
+    }
+    
+    // Redirect user to Diagnosis Module
+    public PageReference toDiagnosisModule(){
+        return Page.HomePage;
+    }
+
+    // Redirect user to Doctor Module   
+    public PageReference toDoctorModule(){
+        return Page.HomePage;
+    }
+    
 }

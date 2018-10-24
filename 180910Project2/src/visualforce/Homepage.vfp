@@ -15,7 +15,7 @@
                             <apex:selectList value="{!state}" size="1" multiselect="false" styleClass="dropDown">
                                 <apex:selectOptions value="{!ListOfStates}" />
                             </apex:selectList>
-                            <apex:commandLink action="{!continueToNextPage}" value="Continue" id="homepageStateModule" styleClass="continueButton"/>
+                            <apex:commandLink action="{!toStatePage}" value="Continue" id="homepageStateModule" styleClass="continueButton" />
                         </apex:form>
                     </div>
                     <div id="usaMap">
@@ -43,7 +43,7 @@
                     </div>
                     <div class="enterModuleButton">
                         <apex:form >
-                            <apex:commandLink action="{!continueToNextPage}" value="Enter Diagnosis Module" id="homepageDiagnosisModule" styleClass="continueButton"/>
+                            <apex:commandLink action="{!toDiagnosisModule}" value="Enter Diagnosis Module" id="homepageDiagnosisModule" styleClass="continueButton"/>
                         </apex:form>                   
                     </div>
                 </fieldset>
@@ -56,7 +56,7 @@
                     <legend class="schedulerBorder">Suggested Doctor</legend>
                     <div class="moduleMainText">
                         <p>
-                            This module allows users to better identigy the correct doctor given a particular diagnosis.
+                            This module allows users to better identify the correct doctor given a particular diagnosis.
                         </p>
                     </div>
                     <div class="moduleSubText">
@@ -66,8 +66,8 @@
                         </p>                       
                     </div>
                     <div class="enterModuleButton">
-                        <apex:form>
-                            <apex:commandLink action="{!continueToNextPage}" value="Enter Doctor Module" id="homepageDoctorModule" styleClass="continueButton"/>
+                        <apex:form >
+                            <apex:commandLink action="{!toDoctorModule}" value="Enter Doctor Module" id="homepageDoctorModule" styleClass="continueButton"/>
                         </apex:form>                   
                     </div>
 				</fieldset>
