@@ -1,0 +1,54 @@
+<apex:page controller="EDiagnoseController" standardStylesheets="false">
+    <apex:stylesheet value="{!$Resource.SymptomDiagnosisPersonal}"/>
+    <apex:pageBlock rendered="{!renderPatientPageOne}">
+        <form>
+            <fieldset>
+                <legend>Patient Information</legend>
+                <h3>
+                    Have you ever used the Symptom Diagnosis machine to diagnose the specific
+                    symptoms which you are currently showing?
+                </h3>
+                <apex:form >
+                    <apex:selectRadio value="{!previousSymptom}" layout="PageDirection" required="true">
+                        <apex:selectOptions value="{!options}"/>
+                    </apex:selectRadio>
+                    <apex:commandButton value="Continue" action="{!setPrevious}"/>
+                </apex:form>
+            </fieldset>
+        </form>
+    </apex:pageBlock>
+    <apex:pageBlock rendered="{!renderPatientPageTwo}">
+        <form>
+            <fieldset>
+                <legend>Patient Information</legend>
+                <div>
+                    <h3>
+                        Please select one of the options from each section below then press
+                        continue to enter the Symptom Diagnosis machine:
+                    </h3>
+                </div>
+                <apex:form >
+                    <div >
+                        <div class="personalDiv">
+                            <h2>Age Range</h2>
+                            
+                            <apex:inputField value="{!myContact.Age__c}" required="true"/>
+                            
+                        </div>
+                        <div class="personalDiv">
+                            <h2>Gender</h2>
+                            
+                            <apex:inputField value="{!myContact.Gender__c}" required="true" />
+                            
+                        </div>
+                        <div id="personalSave">
+                                <apex:commandButton value="Continue" action="{!saveContact}" >
+                                    <!--<apex:param name = "idCatch" value="{!myContact.id}" assignTo="{!catchId}"/>-->
+                                </apex:commandButton>
+                        </div>      
+                    </div>
+                </apex:form>
+            </fieldset>    
+        </form>
+    </apex:pageBlock>
+</apex:page>
