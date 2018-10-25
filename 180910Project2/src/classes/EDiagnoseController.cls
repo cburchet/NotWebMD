@@ -127,8 +127,7 @@ public class EDiagnoseController {
     }
     
     // Diagnosis Module methods
-    public PageReference symptomChooserContinueToNextPage() {
-        //TODO query api for diagnosis
+    private void queryPossibleConditionsDummy() {
         possibleConditions.clear();
         List<String> dummyCondApiIds = new List<String>();
         for (Symptom__c s : patientSymptoms) {
@@ -139,11 +138,86 @@ public class EDiagnoseController {
                 possibleConditions.add(c);
             }
         }
+    }
+    @testVisible
+    private void queryPossibleConditionsApi() {
+        // This should not be synchronous, but it is easier this way
+        
+        // don't make an api call without valid data
+        if (patientSymptoms.size() <= 0) {
+            return;
+        }
+        //TODO: use patient sex
+        // use 'male' as default sex
+        String querySex = false ? 'female' : 'male';
+        //TODO: use patient age
+        // use 20 as default age
+        Integer queryAge = 20;
+        if (queryAge <= 0 || queryAge >= 130) {
+            queryAge = 20;
+        }
+        
+        // create request and set headers
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndPoint('https://api.infermedica.com/v2/diagnosis');
+        request.setMethod('POST');
+        // get app id
+        StaticResource appIdSR = [SELECT Body FROM StaticResource WHERE Name = 'InfermedicaAppId' LIMIT 1];
+        String appId = appIdSR.Body.toString();
+        request.setHeader('App-Id', appId);
+        // get app key
+        StaticResource appKeySR = [SELECT Body FROM StaticResource WHERE Name = 'InfermedicaAppKey' LIMIT 1];
+        String appKey = appKeySR.Body.toString();
+        request.setHeader('App-Key', appKey);
+        request.setHeader('Content-Type', 'application/json');
+        
+        Map<String, Object> body = new Map<String, Object>();
+        List<Map<String, Object>> evidence = new List<Map<String, Object>>();
+        for (Symptom__c s : patientSymptoms) {
+            Map<String, Object> symObj = new Map<String, Object>();
+            symObj.put('choice_id', 'present');
+            symObj.put('id', s.InfermediaID__c);
+            evidence.add(symObj);
+        }
+        body.put('evidence', evidence);
+        // age must be a positive integer between 0 and 130
+        body.put('age', queryAge);
+        // sex must be 'male' or 'female'
+        body.put('sex', querySex);
+        
+        String bodyJson = JSON.serialize(body);
+        System.debug('body: ' + bodyJson);
+        request.setBody(bodyJSON);
+        
+        System.debug('request: ' + request);
+        HttpResponse response = http.send(request);
+        
+        // parse response
+        System.debug('response: ' + response);
+        if (response.getStatusCode() == 200) {
+            Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+            // this conversion fails if convert directly to List<Map>
+            List<Object> conditions = (List<Object>) results.get('conditions');
+            for (Object condObjWrongType : conditions) {
+                Map<String, Object> condObj = (Map<String, Object>) condObjWrongType;
+                String id = (String) condObj.get('id');
+                String name = (String) condObj.get('name');
+                String commonName = (String) condObj.get('common_name');
+                Double probability = (Double) condObj.get('probability');
+                possibleConditions.add(new Condition__c(Name = name,
+                                                        Common_Name__c = commonName,
+                                                        InfermedicaID__c = id));
+            }
+        }
+    }
+    public PageReference symptomChooserContinueToNextPage() {
+        //TODO: call api query function
+        //queryPossibleConditionsDummy();
+        //queryPossibleConditionsApi();
         return Page.DiagnosisChooser;
     }
     public PageReference diagnosisChooserContinueToNextPage() {
-        //TODO: set page reference to suggested doctor module
-        
         // set selected condition
         String conditionApiId = ApexPages.currentPage().getParameters().get('conditionApiId');
         for (Integer i = 0; i < possibleConditions.size(); i++) {
@@ -153,16 +227,34 @@ public class EDiagnoseController {
             }
         }
         
+        //TODO: set page reference to suggested doctor module
         return Page.Homepage;
     }
-    public void searchSymptoms() {
-        //TODO: search database with SOSL
+    private void searchSymptomsDummy() {
         possibleSymptoms.clear();
         for (Symptom__c s : dummySymptoms) {
             if (s.Name.containsIgnoreCase(symptomQuery)) {
                 possibleSymptoms.add(s);
             }
         }
+    }
+    private void searchSymptomsDatabase() {
+        possibleSymptoms.clear();
+        // know which field in which object so use SOQL
+        // also avoids needing to show error if only one character in symptomQuery
+        /*List<Symptom__c> symptomResults = [FIND :('*' + symptomQuery + '*')
+                                            IN NAME FIELDS
+                                            RETURNING Symptom__c(Id, Name, InfermediaID__c)][0];*/
+        List<Symptom__c> symptomResults = [SELECT Id, Name, InfermediaID__c
+                                           FROM Symptom__c
+                                           WHERE Name LIKE :('%' + symptomQuery + '%')];
+        for (Symptom__c s : symptomResults) {
+            possibleSymptoms.add(s);
+        }
+    }
+    public void searchSymptoms() {
+        //searchSymptomsDummy();
+        searchSymptomsDatabase();
     }
     public void addSymptomToList() {
         String symptomApiId = ApexPages.currentPage().getParameters().get('symptomApiId');
