@@ -212,9 +212,8 @@ public class EDiagnoseController {
         }
     }
     public PageReference symptomChooserContinueToNextPage() {
-        //TODO: call api query function
         //queryPossibleConditionsDummy();
-        //queryPossibleConditionsApi();
+        queryPossibleConditionsApi();
         return Page.DiagnosisChooser;
     }
     public PageReference diagnosisChooserContinueToNextPage() {
