@@ -4,17 +4,24 @@ public class EDiagnoseController {
     public Boolean hasUsedSymptomDiagnosisMachine {get; set;}
     public Integer age {get; set;}
     public String gender {get; set;}
-    public String currentCondition {get;set;}	//condition that user has chosen, used to pass condition to be displayed in VF page
+    //condition that user has chosen on suggestedDoc page, used to find condition to be displayed in VF page
+    public String currentCondition {get;set;}
+    //name of condition that user inputs into text field
+    public String conditionName{get;
+        //sets name and gets list of doctors
+        set{
+            conditionName = value;
+            listOfDoctor = GetDoctorByConditionName();
+        }
+    }
+    
+    public Doctor__c selectedDoctor{get;set;}
     
     public List<Condition__c> allConditions{
         get{
-            //if no conditions have been passed in from previous module gather list of all conditions (limit?)
+            //if no conditions have been passed in from previous module gather list of all conditions (limit 20?)
             if (allConditions == null){
-                allConditions = new List<Condition__c>();
-                allConditions.add(new Condition__c(name='Common Cold', InfermedicaID__c = '20'));
-                allConditions.add(new Condition__c(name='Mono', InfermedicaID__c = '22'));
-                allConditions.add(new Condition__c(name='Apnea', InfermedicaID__c = '23'));
-                allConditions.add([select id, name, InfermedicaId__c from condition__c where name = 'Flu' limit 1]);
+                allConditions = [select id, name, InfermedicaId__c from condition__c limit 20];
             }
                 return allConditions;
     	}
@@ -23,9 +30,9 @@ public class EDiagnoseController {
     
     public Condition__c chosenCondition{
         get{
-            //default to common cold (or none?) if no chosen condition passed in
+            //default to random condition if no chosen condition passed in
             if (chosenCondition == null){
-                chosenCondition = new Condition__c(name='Common Cold', InfermedicaID__c = '20');
+                chosenCondition = [select id, name, InfermedicaId__c from condition__c limit 1];
             }
             return chosenCondition;
         }	
@@ -35,15 +42,34 @@ public class EDiagnoseController {
     //function invoked by user select a condition's commandButton
     public void UserChoseCondition(){
         SetChosenCondition();
-        //todo: function to get doctors of chosen condition
+        listOfDoctor = GetDoctors();
     }
     
+    //get chosen condition from database and set it to 
     public void SetChosenCondition(){
-        Condition__c cond = [select id, name, InfermedicaID__c from condition__c where id = :currentCondition];
-        chosenCondition = allConditions.get(allConditions.indexOf(cond));
+        if (currentCondition != ''){
+            Condition__c cond = [select id, name, InfermedicaID__c from condition__c where id = :currentCondition limit 1];
+            Integer index = allConditions.indexOf(cond);
+            if (index >= 0){
+                chosenCondition = allConditions.get(index);
+                conditionName = chosenCondition.name;
+            }
+        }
     }
     
+    //find list of doctors that treat chosenCondition
     public List<Doctor__c> listOfDoctor{get;set;}
+    public List<Doctor__c> GetDoctors(){
+        List<Doctor__c> docs = [select id, name, Street_Address__c, city__c, state__c, phone_number__c, condition__c
+                                from Doctor__c where condition__c = :chosenCondition.id];
+        return docs;
+    }
+    
+    public List<Doctor__c> getDoctorByConditionName(){
+        List<Doctor__c> docs = [select id, name, Street_Address__c, city__c, state__c, phone_number__c, condition__c
+                                from Doctor__c where condition__r.name = :conditionName];
+		return docs;
+    }
     
     public List<SelectOption> getListOfStates(){
         List<SelectOption> options = new List<SelectOption>();

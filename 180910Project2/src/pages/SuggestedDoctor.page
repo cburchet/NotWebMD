@@ -1,13 +1,11 @@
-<!-- todo: make way to get all diseases/conditions -->
 <apex:page showHeader="false" standardStylesheets="false" controller="EDiagnoseController">
-    <fieldset>
-        <apex:pageBlock >
-            <apex:outputPanel id="ChosenCondition">
-                <apex:form >
-                    <apex:inputField value="{!chosenCondition.name}" ></apex:inputField>
-                </apex:form>
-            </apex:outputPanel>
-        </apex:pageBlock>
+    <fieldset class="ConditionInput">
+        <legend class="ConditionInput">Enter Condition Name</legend>
+        <apex:outputPanel id="ChosenCondition">
+            <apex:form >
+                <apex:inputText value="{!conditionName}" ></apex:inputText>
+            </apex:form>
+        </apex:outputPanel>
     </fieldset>
     
     <apex:form >
@@ -17,38 +15,30 @@
                 <apex:pageBlockButtons location="top" >
                     <apex:actionStatus id="status">
                         <apex:facet name="stop">
-                            <apex:outputPanel id="test">
+                            <apex:outputPanel >
                                 <apex:repeat value="{!allConditions}" var="diseases"> 
-                                    <apex:commandButton reRender="ChosenCondition" value="{!diseases.name}" action="{!UserChoseCondition}">
+                                    <apex:commandButton reRender="ChosenCondition, List" value="{!diseases.name}" action="{!UserChoseCondition}">
                                         <apex:param name="diseaseid" value="{!diseases.id}" assignTo="{!currentCondition}" />
                                     </apex:commandButton>
                                 </apex:repeat>
-                                <!--
-                                <apex:commandButton action="{!DoctorListCold}" value="Cold" rerender="List" status="status" style="margin-right: 30px" />
-                                <apex:commandButton action="{!DoctorListFever}" value="Fever" rerender="List" status="status"/>-->
                             </apex:outputPanel>
-                        </apex:facet>
+                        </apex:facet> <!--
                         <apex:facet name="start">
-                            <apex:outputPanel ><!--
-                                <apex:commandButton action="{!DoctorListCold}" value="Cold"  disabled="true" style="margin-right: 30px" />
-                                <apex:commandButton action="{!DoctorListFever}" value="Fever" disabled="true" />
-                                -->
+                            <apex:outputPanel id="start">
+                                <apex:commandButton action="{!UserChoseCondition}" value="Cold"  disabled="true" style="margin-right: 30px" />
+                                <apex:commandButton action="{!UserChoseCondition}" value="Fever" disabled="true" />
                                 <img id="status" src="/img/loading.gif" alt="Loading..." title="Loading..."/>
                             </apex:outputPanel>
-                        </apex:facet>
+                        </apex:facet> -->
                     </apex:actionStatus>
                 </apex:pageBlockButtons> 
             </apex:pageblock>
         </fieldset>
-        
         <br/>
-        
         <fieldset class="schedulerBorder">
             <legend class="schedulerBorder">Results</legend>
             <apex:pageBlock id="List">
                 <apex:pageBlockTable value="{!listOfDoctor}" var="d" >
-                
-                    
                     <apex:column headerValue="Doctors" >
                         <apex:outputlink onclick="redirect('/apex/Homepage')" > {!d.Name} </apex:outputlink>
                     </apex:column>
@@ -57,7 +47,6 @@
                     <apex:column value="{!d.State__c}" />
                     <apex:column value="{!d.Phone_Number__c}" />
                     <apex:column value="{!d.Condition__c}" />
-                    
                 </apex:pageBlockTable>
             </apex:pageBlock>
         </fieldset>
