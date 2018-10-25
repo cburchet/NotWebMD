@@ -4,6 +4,33 @@ public class EDiagnoseController {
     public Integer age {get; set;}
     public String gender {get; set;}
     public Doctor__c currentDoctor {get; set;}
+    public String currentDoctorName {
+        get {
+            System.debug(currentDoctorName);
+            return currentDoctorName;
+        }
+        set;
+    }
+    public List<String> thisWeek {
+        get {
+            List<String> days = new List<String>();
+            for(Integer i = 1; i <6; i++){
+                String dayString = dayFromNumber(i);
+                String month = monthFromNumber();
+                String day = String.valueOf(System.today().day());
+                
+                String todaysDate = dayString + ' ' + month + ' ' + day;
+                days.add(todaysDate);
+            }
+			return days;
+        }
+    }
+    
+    public List<String> appointmentTimes {
+        get {
+            return new List<String>{'12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM'};
+        }
+    }
     
     public List<Doctor__c> doctors {
         get{
@@ -113,10 +140,88 @@ public class EDiagnoseController {
         return options;
     }
     
+    public String dayFromNumber(Integer i){
+        Integer dayNum = math.mod(System.today().day(), 7) + i;
+        
+        if (dayNum > 7)
+            dayNum = math.mod(dayNum, 7);
+        
+        switch on dayNum {
+            when 1 {
+                return 'Mon';
+            }
+            when 2 {
+                return 'Tue';
+            }
+            when 3 {
+                return 'Wed';
+            }
+            when 4 {
+                return 'Thu';
+            }
+            when 5 {
+                return 'Fri';
+            }
+            when 6 {
+                return 'Sat';
+            }
+            when 7 {
+                return 'Sun';
+            }
+            when else {
+                return '';
+            }
+        }
+    }
+    
+    public String monthFromNumber(){
+        switch on System.today().month() {
+            when 1 {
+                return 'Jan';
+            }
+            when 2 {
+                return 'Feb';
+            }
+            when 3 {
+                return 'Mar';
+            }
+            when 4 {
+                return 'Apr';
+            }
+            when 5 {
+                return 'May';
+            }
+            when 6 {
+                return 'Jun';
+            }
+            when 7 {
+                return 'Jul';
+            }
+            when 8 {
+                return 'Aug';
+            }
+            when 9 {
+                return 'Sept';
+            }
+            when 10 {
+                return 'Oct';
+            }
+            when 11 {
+                return 'Nov';
+            }
+            when 12 {
+                return 'Dec';
+            }
+            when else {
+                return '';
+            }
+        }
+    }
+    
     
     // Redirect user to Book An Appointment Module
     public PageReference toAppointment(){
-        return Page.StatePage;
+        return Page.BookAnAppointment;
     }
     
     // Redirect user to State Page

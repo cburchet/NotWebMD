@@ -40,7 +40,7 @@
                         <apex:repeat value="{!doctors}" var="doc">
                             <apex:form >
                                 <apex:commandLink action="{!toAppointment}" value="{!doc.Name}" id="doctorName" styleClass="doctorName">
-                                    <!--<apex:param name="currentDoctor" value="{!doc.Name}" assignTo="{!currentDoctor}"/>-->
+                                    <apex:param name="currentDoctorName" value="{!doc.Name}" assignTo="{!currentDoctorName}"/>
                                 </apex:commandLink>
                             </apex:form>
                             <ul> 

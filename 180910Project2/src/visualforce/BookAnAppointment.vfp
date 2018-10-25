@@ -1,0 +1,55 @@
+<apex:page showHeader="false" standardStylesheets="false" controller="EDiagnoseController">
+    <apex:stylesheet value="{!URLFOR($Resource.Styles)}"/>
+    <div id="main">
+        <!-- Start moduleContainer -->
+        <div class="moduleContainer">
+            <!-- Start Book An Appointment -->
+            <div class="module">
+                <fieldset class="schedulerBorder">
+                    <legend class="schedulerBorder">Book An Appointment</legend>
+                                    <div>
+                    <div id="doctorsInformation" style="float:left;">
+                        <div id="doctorNameAppointment">
+                            {!currentDoctorName}
+                        </div>
+                        <div id="doctorInfoAppointment">
+                            stuff
+                        </div>
+                    </div>
+                </div>
+                    <div id="appointmentTimes">
+                        <table border="1px">
+                            <tr>
+                                <th>{!thisWeek[0]}</th>
+                                <th>{!thisWeek[1]}</th>
+                                <th>{!thisWeek[2]}</th>
+                                <th>{!thisWeek[3]}</th>
+                                <th>{!thisWeek[4]}</th>
+                            </tr>
+                            <apex:repeat value="{!appointmentTimes}" var="a">
+                                <tr>
+                                    <td>{!a}</td>
+                                    <td>{!a}</td>
+                                    <td>{!a}</td>
+                                    <td>{!a}</td>
+                                    <td>{!a}</td>
+                                </tr>
+                            </apex:repeat>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+            <!-- End Book An Appointment -->
+            
+            <!-- Start Appointment Details -->
+            <div class="module">
+                <fieldset class="schedulerBorder">
+                    <legend class="schedulerBorder">Appointment Details</legend>
+
+                </fieldset>
+            </div>
+            <!-- End Appointment Details -->
+        </div> 
+        <!-- End moduleContainer -->
+    </div>
+</apex:page>
