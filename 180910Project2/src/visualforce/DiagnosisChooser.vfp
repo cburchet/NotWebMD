@@ -1,0 +1,52 @@
+<apex:page showHeader="false" standardStylesheets="false" controller="EDiagnoseController" title="Symptom Diagnosis | E-Diagnose">
+    <apex:stylesheet value="{!URLFOR($Resource.Styles)}"/>
+    <div id="main">
+        <div class="moduleContainer">
+            <h1>
+                Symptom Diagnosis
+            </h1>
+            <!-- Start Show Symptoms Module -->
+            <div class="module">
+                <fieldset class="schedulerBorder">
+                    <div class="moduleMainText">
+                        <p>
+                            The symptoms which you are showing consist of:
+                        </p>
+                    </div>
+                    <legend class="schedulerBorder">Symptoms</legend>
+                    <apex:repeat value="{!patientSymptoms}" var="s">
+                        <apex:outputPanel layout="block">
+                            <apex:outputField value="{!s.Name}"/>
+                        </apex:outputPanel>
+                    </apex:repeat>
+                </fieldset>
+            </div>
+            <!-- End Show Symptoms Module -->
+            <!-- Start Show Diagnosis Module -->
+            <div class="module">
+                <fieldset class="schedulerBorder">
+                    <div class="moduleMainText">
+                        <p>
+                            Below is the list of the possible conditions based on the symptoms you have provided above.
+                            Select condition to be refered to provider for further assessment.
+                        </p>
+                    </div>
+                    <legend class="schedulerBorder">Conditions</legend>
+                    <fieldset>
+                        <apex:repeat value="{!possibleConditions}" var="c">
+                            <apex:outputPanel layout="block">
+                                <apex:form >
+                                    <apex:commandLink action="{!diagnosisChooserContinueToNextPage}" value="{!c.Common_Name__c}">
+                                        <apex:param name="conditionApiId" value="{!c.InfermedicaID__c}"/>
+                                        <!--<apex:param name="conditionName" value="{!c.Common_Name__c}" assignTo="{!conditionName}"/>-->
+                                    </apex:commandLink>
+                                </apex:form>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                    </fieldset>
+                </fieldset>
+            </div>
+            <!-- End Show Diagnosis Module -->
+        </div>
+    </div>
+</apex:page>

@@ -1,0 +1,35 @@
+<apex:page controller="EDiagnoseController" standardStylesheets="false" showHeader="false" sidebar="false">
+    <apex:stylesheet value="{!$Resource.SymptomDiagnosisPersonal}"/>
+    <apex:pageBlock >
+            <fieldset>
+                <legend>Patient Information</legend>
+                <div>
+                    <h3>
+                        Please select one of the options from each section below then press
+                        continue to enter the Symptom Diagnosis machine:
+                    </h3>
+                </div>
+                <apex:form >
+                    <div >
+                        <div class="personalDiv">
+                            <h2>Age Range</h2>
+                            
+                            <apex:inputField value="{!myContact.Age__c}" required="true" html-placeholder="Age"/>
+                            
+                        </div>
+                        <div class="personalDiv">
+                            <h2>Gender</h2>
+                            
+                            <apex:inputField value="{!myContact.Gender__c}" required="true" html-placeholder="Gender"/>
+                            
+                        </div>
+                        <div id="personalSave">
+                            <apex:commandButton value="Continue" action="{!toDiagnosisSymptomChooser}" >
+                                <!--<apex:param name = "idCatch" value="{!myContact.id}" assignTo="{!catchId}"/>-->
+                            </apex:commandButton>
+                        </div>      
+                    </div>
+                </apex:form>
+            </fieldset>    
+    </apex:pageBlock>
+</apex:page>

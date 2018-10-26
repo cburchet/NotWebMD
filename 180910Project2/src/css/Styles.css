@@ -24,23 +24,15 @@ legend.schedulerBorder {
     border-bottom:none;
 }
 
-#stateContent{
+#stateContent, usaMap{
     float:left;
     width:50%;
     margin-left: 20px;
 }
 
-#usaMap {
-    margin-left: 60%;
-}
-
 .moduleSubText {
     float:left;
     width: 60%;
-}
-
-.moduleContainer .module:not(:first-of-type){
-    margin-top: 30px;
 }
 
 .continueButton {
@@ -51,31 +43,13 @@ legend.schedulerBorder {
     color: black;
     padding: 2px;
     border: 1px solid black;
-    box-shadow: 2px 2px 2px #000;
-    border-radius: 5px;
 }
 
-.dropDown {
-    border: 1px solid black;
-    font-size: 1em;
-    font-family: Verdana, Geneva, sans-serif;
-}
 
-.enterModuleButton {
-    margin-left: 60%;
-    margin-top: 50px;
-}
 
-.doctorName {
-	text-decoration: none;    
-}
 
-.informationList {
-    list-style: none;
-}
 
-.informationHeader {
-    height: 5px;
-}
+
+
 
 
