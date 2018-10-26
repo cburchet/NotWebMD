@@ -1,0 +1,47 @@
+<apex:page showHeader="false" standardStylesheets="false" controller="EDiagnoseController" title="Symptom Diagnosis | E-Diagnose">
+    <apex:stylesheet value="{!URLFOR($Resource.Styles)}"/>
+    <div id="main">
+        <div class="moduleContainer">
+            <h1>
+                Symptom Diagnosis
+            </h1>
+            <!-- Start Choose Symptoms Module -->
+            <div class="module">
+                <div class="moduleMainText">
+                    <p>
+                        Add a symptom(s) from the below list to receive diagnosis.
+                        Once all the necessary symptoms have been selected press continue.
+                    </p>
+                </div>
+                <apex:form >
+                    <apex:inputText value="{!symptomQuery}"/>
+                    <apex:commandButton action="{!searchSymptoms}" value="Search"/>
+                </apex:form>
+                <apex:outputPanel id="diagnosisSymptoms">
+                    <fieldset class="schedulerBorder">
+                        <legend class="schedulerBorder">Search Symptoms</legend>
+                        <apex:form >
+                            <apex:repeat value="{!possibleSymptoms}" var="s">
+                                <apex:commandButton action="{!addSymptomToList}" reRender="diagnosisSymptoms" value="{!s.Name}">
+                                    <apex:param name="symptomApiId" value="{!s.InfermediaID__c}"/>
+                                </apex:commandButton>
+                            </apex:repeat>
+                        </apex:form>
+                    </fieldset>
+                    <fieldset class="schedulerBorder">
+                        <legend class="schedulerBorder">Your Symptoms</legend>
+                        <apex:repeat value="{!patientSymptoms}" var="s">
+                            <apex:outputPanel layout="block">
+                                <apex:outputField value="{!s.Name}"/>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                        <apex:form >
+                            <apex:commandButton value="Continue" action="{!symptomChooserContinueToNextPage}"/>
+                        </apex:form>
+                    </fieldset>
+                </apex:outputPanel>
+            </div>
+            <!-- End Choose Symptoms Module -->
+        </div>
+    </div>
+</apex:page>

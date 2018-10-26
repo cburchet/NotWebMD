@@ -1,0 +1,431 @@
+public class EDiagnoseController {
+    public String state {get; set;}
+    public Boolean hasUsedSymptomDiagnosisMachine {get; set;}
+    public Integer age {get; set;}
+    public String gender {get; set;}
+    public Doctor__c currentDoctor {get; set;}
+    public boolean renderPatientPageTwo{get; set;}
+    public String previousSymptom{get; set;}			//Grabs the value based on the radio button
+    public Condition__c patientCondition {get; set;}
+    public List<Doctor__c> listOfDoctor{get;set;}
+    public String currentCondition {get;set;}			//condition that user has chosen, used to pass condition to be displayed in VF page
+    public String conditionName {get;set;}
+    
+    public List<Condition__c> allConditions{
+        get{
+            //if no conditions have been passed in from previous module gather list of all conditions (limit?)
+            if (allConditions == null){
+                allConditions = new List<Condition__c>();
+                allConditions.add([select id, name, InfermedicaId__c from condition__c where name = 'Flu' limit 1]);
+            }
+                return allConditions;
+    	}
+    	set;
+    }
+    
+    public Condition__c chosenCondition{
+        get{
+            //default to common cold (or none?) if no chosen condition passed in
+            if (chosenCondition == null){
+                chosenCondition = new Condition__c(name='Flu', InfermedicaID__c = '20');
+            }
+            return chosenCondition;
+        }	
+        set;
+    }
+    
+    //function invoked by user select a condition's commandButton
+    public void UserChoseCondition(){
+        SetChosenCondition();
+        //todo: function to get doctors of chosen condition
+    }
+    
+    public void SetChosenCondition(){
+        Condition__c cond = [select id, name, InfermedicaID__c from condition__c where id = :currentCondition];
+        chosenCondition = allConditions.get(allConditions.indexOf(cond));
+    }
+    
+    public String currentDoctorName {
+        get { return currentDoctorName; }
+        set {}
+    }
+    public List<String> thisWeek {
+        get {
+            List<String> days = new List<String>();
+            for(Integer i = 1; i <6; i++){
+                String dayString = dayFromNumber(i);
+                String month = monthFromNumber();
+                String day = String.valueOf(System.today().day());
+                
+                String todaysDate = dayString + ' ' + month + ' ' + day;
+                days.add(todaysDate);
+            }
+            return days;
+        }
+    }
+    
+    public List<String> appointmentTimes {
+        get { return new List<String> {'12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM'}; }
+        set {}
+    }
+    
+    //Sets which pageblock renders
+    public boolean renderPatientPageOne{
+        get{
+            if(renderPatientPageOne == null){
+                renderPatientPageOne = true;
+            }
+            return renderPatientPageOne;
+        }
+        set;
+    }
+    
+    // Diagnosis module properties
+    public List<Symptom__c> patientSymptoms {
+        get {
+            if (patientSymptoms == null) {
+                patientSymptoms = new List<Symptom__c>();
+            }
+            return patientSymptoms;
+        }
+        set;
+    }
+    
+    public List<Condition__c> possibleConditions {
+        get {
+            if (possibleConditions == null) {
+                possibleConditions = new List<Condition__c>();
+            }
+            // return new List<Condition__c>{new Condition__c(InfermedicaID__c = 'c2', Name = 'Medical Condition Name 2', Common_Name__c = 'Condition 2')};
+            return possibleConditions;
+        }
+        set;
+    }
+    public String symptomQuery {
+        get {
+            if (symptomQuery == null) {
+                symptomQuery = '';
+            }
+            return symptomQuery;
+        }
+        set;
+    }
+    public List<Symptom__c> possibleSymptoms {
+        get {
+            if (possibleSymptoms == null) {
+                possibleSymptoms = new List<Symptom__c>();
+            }
+            return possibleSymptoms;
+        }
+        set;
+    }
+    
+    //Creates the Options available in the radio buttons
+    public List<SelectOption> getOptions(){
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('YES','Yes'));
+        options.add(new SelectOption('NO','No'));
+        return options;
+    }
+    //Grabs the contact corresponding to the id provided in the URL. (For Testing). Will Change.
+    public Contact myContact{
+        get{
+            if(myContact == null){
+                id contactId = ApexPages.currentPage().getParameters().get('id');
+                myContact = [SELECT id,gender__c,age__c FROM Contact WHERE id = :contactId LIMIT 1];
+            }
+            return myContact;
+        }set;
+    }
+    
+    
+    // This doesn't currently do anything other than call the get property for this.doctors which hard-codes the list of doctors.
+    // Once back end development has started, this will query the necessary doctors
+    public void filterDoctors(){
+        List<Doctor__c> docs = new List<Doctor__c>();
+        this.doctors = docs;
+    }
+    
+    // Populate dropdown list of states
+    public List<SelectOption> getListOfStates(){
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('Alabama','Alabama'));
+        options.add(new SelectOption('Alaska','Alaska'));
+        options.add(new SelectOption('Arizona','Arizona'));
+        options.add(new SelectOption('Arkansas','Arkansas'));
+        options.add(new SelectOption('California','California'));
+        options.add(new SelectOption('Colorado','Colorado'));
+        options.add(new SelectOption('Connecticut','Connecticut'));
+        options.add(new SelectOption('Delaware','Delaware'));
+        options.add(new SelectOption('Florida','Florida'));
+        options.add(new SelectOption('Georgia','Georgia'));
+        options.add(new SelectOption('Hawaii','Hawaii'));
+        options.add(new SelectOption('Idaho','Idaho'));
+        options.add(new SelectOption('Illinois','Illinois'));
+        options.add(new SelectOption('Indiana','Indiana'));
+        options.add(new SelectOption('Iowa','Iowa'));
+        options.add(new SelectOption('Kansas','Kansas'));
+        options.add(new SelectOption('Kentucky','Kentucky'));
+        options.add(new SelectOption('Louisiana','Louisiana'));
+        options.add(new SelectOption('Maine','Maine'));
+        options.add(new SelectOption('Maryland','Maryland'));
+        options.add(new SelectOption('Massachusetts','Massachusetts'));
+        options.add(new SelectOption('Michigan','Michigan'));
+        options.add(new SelectOption('Minnesota','Minnesota'));
+        options.add(new SelectOption('Mississippi','Mississippi'));
+        options.add(new SelectOption('Missouri','Missouri'));
+        options.add(new SelectOption('Montana','Montana'));
+        options.add(new SelectOption('Nebraska','Nebraska'));
+        options.add(new SelectOption('Nevada','Nevada'));
+        options.add(new SelectOption('New Hampshire','New Hampshire'));
+        options.add(new SelectOption('New Jersey','New Jersey'));
+        options.add(new SelectOption('New Mexico','New Mexico'));
+        options.add(new SelectOption('New York','New York'));
+        options.add(new SelectOption('North Carolina','North Carolina'));
+        options.add(new SelectOption('North Dakota','North Dakota'));
+        options.add(new SelectOption('Ohio','Ohio'));
+        options.add(new SelectOption('Oklahoma','Oklahoma'));
+        options.add(new SelectOption('Oregon','Oregon'));
+        options.add(new SelectOption('Pennsylvania','Pennsylvania'));
+        options.add(new SelectOption('Rhode Island','Rhode Island'));
+        options.add(new SelectOption('South Carolina','South Carolina'));
+        options.add(new SelectOption('South Dakota','South Dakota'));
+        options.add(new SelectOption('Tennessee','Tennessee'));
+        options.add(new SelectOption('Texas','Texas'));
+        options.add(new SelectOption('Utah','Utah'));
+        options.add(new SelectOption('Vermont','Vermont'));
+        options.add(new SelectOption('Virginia','Virginia'));
+        options.add(new SelectOption('Washington','Washington'));
+        options.add(new SelectOption('West Virginia','West Virginia'));
+        options.add(new SelectOption('Wisconsin','Wisconsin'));
+        options.add(new SelectOption('Wyoming','Wyoming'));
+        return options;
+    }
+    
+    // START HARD CODED DATA
+    
+    public List<Doctor__c> doctors {
+        get{
+            // Temporary  switch to hard-code the populating of the doctors.
+            switch on this.state {
+                when 'Virgninia' {this.doctors = populateVADoctors();}
+                when 'Pennsylvania' {this.doctors = populatePADoctors();}
+                when 'California' {this.doctors = populateCADoctors();}
+                when else {this.doctors = populateVADoctors();}
+            }
+            return this.doctors;
+        } 
+        set{doctors = value;}
+    }
+    
+    // The three below populateDoctor methods are temporary. Used for Front End testing.
+    private List<Doctor__c> populateVADoctors(){
+        List<Doctor__c> docs = new List<Doctor__c>();
+        docs.add(new Doctor__c(Name='Dr.Ailment', Phone_Number__c='000 000 0000', State__c='Virginia', City__c='Reston', Street_Address__c='1234 W St', Suite_No__c=101));
+        docs.add(new Doctor__c(Name='Dr.Bones', Phone_Number__c='000 000 0000', State__c='Virginia', City__c='Reston', Street_Address__c='1234 N St', Suite_No__c=101));
+        docs.add(new Doctor__c(Name='Dr.Chicklet', Phone_Number__c='000 000 0000', State__c='Virginia', City__c='Herndon', Street_Address__c='1234 E St', Suite_No__c=101));
+        return docs;
+    }
+    
+    private List<Doctor__c> populatePADoctors(){
+        List<Doctor__c> docs = new List<Doctor__c>();
+        docs.add(new Doctor__c(Name='Dr.Diagnosis', Phone_Number__c='000 000 0000', State__c='Pennsylvania', City__c='Philadelphia', Street_Address__c='1234 W St', Suite_No__c=101));
+        docs.add(new Doctor__c(Name='Dr.Effiel', Phone_Number__c='000 000 0000', State__c='Pennsylvania', City__c='Philadelphia', Street_Address__c='1234 S St', Suite_No__c=101));
+        return docs;
+    }
+    
+    private List<Doctor__c> populateCADoctors(){
+        List<Doctor__c> docs = new List<Doctor__c>();
+        docs.add(new Doctor__c(Name='Dr.Filament', Phone_Number__c='000 000 0000', State__c='California', City__c='Los Angelos', Street_Address__c='1234 E St', Suite_No__c=101));
+        docs.add(new Doctor__c(Name='Dr.Gastro', Phone_Number__c='000 000 0000', State__c='California', City__c='Los Angelos', Street_Address__c='1234 E St', Suite_No__c=101));
+        return docs;
+    }
+    
+    
+    public List<Condition__c> getDummyConditions(){
+        return this.dummyConditions;
+    }
+    
+    public final List<Condition__c> dummyConditions = new List<Condition__c> {
+        new Condition__c(InfermedicaID__c = 'c1', Name = 'Medical Condition Name 1', Common_Name__c = 'Condition 1'),
+            new Condition__c(InfermedicaID__c = 'c2', Name = 'Medical Condition Name 2', Common_Name__c = 'Condition 2'),
+            new Condition__c(InfermedicaID__c = 'c3', Name = 'Medical Condition Name 3', Common_Name__c = 'Condition 3'),
+            new Condition__c(InfermedicaID__c = 'c4', Name = 'Medical Condition Name 4', Common_Name__c = 'Condition 4'),
+            new Condition__c(InfermedicaID__c = 'c5', Name = 'Medical Condition Name 5', Common_Name__c = 'Condition 5'),
+            new Condition__c(InfermedicaID__c = 'c6', Name = 'Medical Condition Name 6', Common_Name__c = 'Condition 6'),
+            new Condition__c(InfermedicaID__c = 'c7', Name = 'Medical Condition Name 7', Common_Name__c = 'Condition 7'),
+            new Condition__c(InfermedicaID__c = 'c8', Name = 'Medical Condition Name 8', Common_Name__c = 'Condition 8'),
+            new Condition__c(InfermedicaID__c = 'c9', Name = 'Medical Condition Name 9', Common_Name__c = 'Condition 9')
+            };
+                
+    // Diagnosis module dummy data
+    public final List<Symptom__c> dummySymptoms = new List<Symptom__c> {
+        new Symptom__c(InfermediaID__c = 's1', Name = 'Symptom 1'),
+            new Symptom__c(InfermediaID__c = 's2', Name = 'Symptom 2'),
+            new Symptom__c(InfermediaID__c = 's3', Name = 'Symptom 3'),
+            new Symptom__c(InfermediaID__c = 's4', Name = 'Symptom 4'),
+            new Symptom__c(InfermediaID__c = 's5', Name = 'Symptom 5'),
+            new Symptom__c(InfermediaID__c = 's6', Name = 'Symptom 6'),
+            new Symptom__c(InfermediaID__c = 's7', Name = 'Symptom 7'),
+            new Symptom__c(InfermediaID__c = 's8', Name = 'Symptom 8'),
+            new Symptom__c(InfermediaID__c = 's9', Name = 'Symptom 9')
+            };
+
+     // END HARD CODED DATA
+                
+                
+    // Given a number retrieved from calling System.today().day(), return the abbreviation for the name of the week day.
+    // param: 
+    public String dayFromNumber(Integer i){
+        Integer dayNum = math.mod(System.today().day(), 7) + i;
+        
+        if (dayNum > 7)
+            dayNum = math.mod(dayNum, 7);
+        
+        switch on dayNum {
+            when 1 {return 'Mon';}
+            when 2 {return 'Tue';}
+            when 3 {return 'Wed';}
+            when 4 {return 'Thu';}
+            when 5 {return 'Fri';}
+            when 6 {return 'Sat';}
+            when 7 {return 'Sun';}
+            when else {return '';}
+        }
+    }
+    
+    // Given a number retrieved from calling System.today().month(), return the abbreviation for the name of the month
+    public String monthFromNumber(){
+        switch on System.today().month() {
+            when 1 {return 'Jan';}
+            when 2 {return 'Feb';}
+            when 3 {return 'Mar';}
+            when 4 {return 'Apr';}
+            when 5 {return 'May';}
+            when 6 {return 'Jun';}
+            when 7 {return 'Jul';}
+            when 8 {return 'Aug';}
+            when 9 {return 'Sept';}
+            when 10 {return 'Oct';}
+            when 11 {return 'Nov';}
+            when 12 {return 'Dec';}
+            when else {return '';}
+        }
+    }
+    
+    public void searchSymptoms() {
+        //TODO: search database with SOSL
+        possibleSymptoms.clear();
+        for (Symptom__c s : dummySymptoms) {
+            if (s.Name.containsIgnoreCase(symptomQuery)) {
+                possibleSymptoms.add(s);
+            }
+        }
+    }
+    public void addSymptomToList() {
+        String symptomApiId = ApexPages.currentPage().getParameters().get('symptomApiId');
+        for (Integer i = 0; i < possibleSymptoms.size(); i++) {
+            if (possibleSymptoms[i].InfermediaID__c == symptomApiId) {
+                patientSymptoms.add(possibleSymptoms[i]);
+                possibleSymptoms.remove(i);
+                break;
+            }
+        }
+    }
+    
+    // Start PageReference methods
+    
+    public void sendEmail(){
+        System.debug('Email Sent!');
+    }
+    
+    public PageReference toDummyPage(){
+        return Page.DummyPage;
+    }
+    
+    // Redirect user to Book An Appointment Module
+    public PageReference toAppointment(){
+        return Page.BookAnAppointment;
+    }
+    
+    // Redirect user to State Page
+    public PageReference toStatePage(){
+        return Page.StatePage;
+    }
+    
+    // Redirect user to Home Page
+    public PageReference toHomePage(){
+        return Page.HomePage;
+    }
+    
+    // Redirect user to Diagnosis Module
+    public PageReference toDiagnosisModule(){
+        return Page.SymptomDiagnosisPersonal;
+    }
+    
+    // Redirect user to Doctor Module   
+    public PageReference toDoctorModule(){
+        return Page.SuggestedDoctor;
+    }
+    
+    public PageReference toEmailConfirmation(){
+        return Page.EmailSent;
+    }
+    
+    public PageReference toDiagnosisSymptomChooser(){
+        return Page.DiagnosisSymptomChooser;
+    }
+    
+    //Updates the contact record with updated values
+    public PageReference saveContact(){
+        system.debug(myContact);
+        update myContact;
+        //return null;
+        return Page.DiagnosisSymptomChooser;
+    }
+    //Sets the first pageBlock render to false and second pageBlock to true.
+    public PageReference setPrevious(){
+        renderPatientPageOne = false;
+        renderPatientPageTwo = true;
+        return Page.SymptomDiagnosisPersonal;
+    }
+    
+    // Diagnosis Module methods
+    public PageReference symptomChooserContinueToNextPage() {
+        //TODO query api for diagnosis
+        possibleConditions.clear();
+        List<String> dummyCondApiIds = new List<String>();
+        for (Symptom__c s : patientSymptoms) {
+            dummyCondApiIds.add('c' + s.InfermediaID__c.substring(1, 2));
+        }
+        for (Condition__c c : dummyConditions) {
+            if (dummyCondApiIds.contains(c.InfermedicaID__c)) {
+                possibleConditions.add(c);
+            }
+        }
+        return Page.DiagnosisChooser;
+    }
+    
+    public PageReference diagnosisChooserContinueToNextPage() {
+        //TODO: set page reference to suggested doctor module
+        
+        // set selected condition
+        String conditionApiId = ApexPages.currentPage().getParameters().get('conditionApiId');
+        for (Integer i = 0; i < possibleConditions.size(); i++) {
+            if (possibleConditions[i].InfermedicaID__c == conditionApiId) {
+                patientCondition = possibleConditions[i];
+                break;
+            }
+        }
+        
+        return Page.SuggestedDoctor;
+    }
+    
+    public PageReference toSDPTwo(){
+        return Page.SymptomDiagnosisPersonal2;
+    }
+    
+    
+    // End PageReference methods 
+    
+}

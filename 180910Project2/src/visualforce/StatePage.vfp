@@ -1,0 +1,69 @@
+<apex:page showHeader="false" standardStylesheets="false" controller="EDiagnoseController">
+    <apex:stylesheet value="{!URLFOR($Resource.Styles)}"/>
+    <div id="main">
+        <!-- Start moduleContainer -->
+        <div class="moduleContainer">
+            <!-- Start Select a Doctor by State Module -->
+            <div class="module">
+                <fieldset class="schedulerBorder">
+                    <legend class="schedulerBorder">Select a Doctor by State</legend>
+                    <div id="stateContent"> 
+                        <h2>Select State</h2>
+                        <p>Choose state which your healthcare plan applies</p>
+                        <h5>Filter providers based on location</h5>
+                        <apex:form >
+                            <apex:selectList value="{!state}" size="1" multiselect="false" styleClass="dropDown">
+                                <apex:selectOptions value="{!ListOfStates}"/>
+                                <apex:actionSupport event="onchange" action="{!filterDoctors}" reRender="doctorList"/>
+                            </apex:selectList>
+                        </apex:form>
+                    </div>
+                    <div id="usaMap">
+                        <apex:image id="usaMap" value="{!$Resource.MapOfUSA}" width="250" height="250" alt="Blank Map of the Unites States of America"/>
+                    </div>
+                </fieldset>
+            </div>
+            <!-- End Select a Doctor by State Module -->
+            
+            <!-- Start Symptom Diagnosis Module -->
+            <div class="module">
+                <fieldset class="schedulerBorder">
+                    <legend class="schedulerBorder">List of Providers Based on State</legend>
+                    <div class="moduleMainText">
+                        Below is a list of providers covered underneath the healthcare co. plan.
+                        <h5>Providers are filtered based on location:</h5>
+                    </div>
+                    <div class="moduleSubText">
+                       
+                    </div>
+                    <apex:outputPanel id="doctorList">
+                        <apex:repeat value="{!doctors}" var="doc">
+                            <apex:form >
+                                <apex:commandLink action="{!toAppointment}" value="{!doc.Name}" id="doctorName" styleClass="doctorName">
+                                    <apex:param name="currentDoctorName" value="{!doc.Name}" assignTo="{!currentDoctorName}"/>
+                                </apex:commandLink>
+                            </apex:form>
+                            <ul> 
+                                <h5 class="informationHeader">Contact Information:</h5>
+                                <ul class="informationList">
+                                    <li>Phone Number: {!doc.Phone_Number__c}</li>
+                                </ul>
+                            </ul>
+                            <ul>
+                                <h5 class="informationHeader">Address Information:</h5>
+                                <ul class="informationList">
+                                    <li>Street:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!doc.Street_Address__c}</li>
+                                    <li>Suite No:&nbsp;{!doc.Suite_No__c}</li>
+                                    <li>City:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!doc.City__c}</li>
+                                    <li>State:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!doc.State__c}</li>
+                                </ul>
+                            </ul>
+                        </apex:repeat>
+                    </apex:outputPanel>
+                </fieldset>
+            </div>
+            <!-- End Symptom Diagnosis Module -->
+        </div> 
+        <!-- End moduleContainer -->
+    </div>
+</apex:page>

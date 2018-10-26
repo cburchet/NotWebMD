@@ -1,0 +1,67 @@
+<apex:page showHeader="false" standardStylesheets="false" controller="EDiagnoseController">
+    <apex:stylesheet value="{!URLFOR($Resource.Styles)}"/>
+    <div id="main">
+        <!-- Start moduleContainer -->
+        <div class="moduleContainer">
+            <!-- Start Book An Appointment -->
+            <div class="module">
+                <fieldset class="schedulerBorder">
+                    <legend class="schedulerBorder">Book An Appointment</legend>
+                    <div id="doctorsInformation" style="float:left;">
+                        <div id="doctorNameAppointment">
+                            {!currentDoctorName}
+                        </div>
+                        <div id="doctorInfoAppointment">
+                            Primary Care Doctor <br/>
+                            5 Stars <br/>
+                            <q>{!currentDoctor.Name} is amazing! Treats your illness properly.</q>
+                            {!currentDoctor.Street_Address__c} {!currentDoctor.City__c}, {!currentDoctor.State__c}
+                        </div>
+                    </div>
+                    <div id="appointmentTimes">
+                        <table border="1px">
+                            <tr>
+                                <th>{!thisWeek[0]}</th>
+                                <th>{!thisWeek[1]}</th>
+                                <th>{!thisWeek[2]}</th>
+                                <th>{!thisWeek[3]}</th>
+                                <th>{!thisWeek[4]}</th>
+                            </tr>
+                            <apex:repeat value="{!appointmentTimes}" var="a">
+                                <tr>
+                                    <td>{!a}</td>
+                                    <td>{!a}</td>
+                                    <td>{!a}</td>
+                                    <td>{!a}</td>
+                                    <td>{!a}</td>
+                                </tr>
+                            </apex:repeat>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+            <!-- End Book An Appointment -->
+            
+            <!-- Start Appointment Details -->
+            <div class="module">
+                <fieldset class="schedulerBorder">
+                    <legend class="schedulerBorder">Appointment Details</legend>
+                    Please fill out the information below:
+                    <apex:form >
+                        Name: <input type="text" name="name" required="True" placeholder="Please enter patient's name" /><br/>
+                        Insurance Provider: <input type="text" name="insurance" required="False" placeholder="Please enter patient's insurance" /><br/>
+                        Appointment Details: Illness, Date <br/>
+                        Contact Information: <br/>
+                        Email: <input type="email" name="email" required="True" placeholder="example@example.com" /><br/>
+                        Phone Number: <input type="tel" name="phone" required="True" placeholder="Please enter patient's phone number" /><br/> 
+                        Notes: <input type="text" name="notes" placeholder="Please enter any additional notes fo {!currentDoctor.Name}" /><br/> 
+                        
+                        <apex:commandButton action="{!toEmailConfirmation}" value="Book An Appointment" styleClass="continueButton"/>
+                    </apex:form>
+                </fieldset>
+            </div>
+            <!-- End Appointment Details -->
+        </div> 
+        <!-- End moduleContainer -->
+    </div>
+</apex:page>

@@ -1,0 +1,17 @@
+<apex:page showHeader="false" standardStylesheets="false" controller="EDiagnoseController">
+    <apex:stylesheet value="{!URLFOR($Resource.Styles)}"/>
+    <div id="main">
+        <!-- Start moduleContainer -->
+        <div class="moduleContainer">
+            <!-- Start Book An Appointment -->
+            <div class="module">
+                <fieldset class="schedulerBorder">
+                    <legend class="schedulerBorder">Appointment Confirmation</legend>
+                    Email Sent!
+                </fieldset>
+            </div>
+            <!-- End Book An Appointment -->
+        </div> 
+        <!-- End moduleContainer -->
+    </div>
+</apex:page>
