@@ -43,29 +43,6 @@ public class EDiagnoseController {
         }
         set;
     }
-    // Diagnosis module dummy data
-    public static final List<Symptom__c> dummySymptoms = new List<Symptom__c> {
-        new Symptom__c(InfermediaID__c = 's1', Name = 'Symptom 1'),
-        new Symptom__c(InfermediaID__c = 's2', Name = 'Symptom 2'),
-        new Symptom__c(InfermediaID__c = 's3', Name = 'Symptom 3'),
-        new Symptom__c(InfermediaID__c = 's4', Name = 'Symptom 4'),
-        new Symptom__c(InfermediaID__c = 's5', Name = 'Symptom 5'),
-        new Symptom__c(InfermediaID__c = 's6', Name = 'Symptom 6'),
-        new Symptom__c(InfermediaID__c = 's7', Name = 'Symptom 7'),
-        new Symptom__c(InfermediaID__c = 's8', Name = 'Symptom 8'),
-        new Symptom__c(InfermediaID__c = 's9', Name = 'Symptom 9')
-    };
-    public static final List<Condition__c> dummyConditions = new List<Condition__c> {
-        new Condition__c(InfermedicaID__c = 'c1', Name = 'Medical Condition Name 1', Common_Name__c = 'Condition 1'),
-        new Condition__c(InfermedicaID__c = 'c2', Name = 'Medical Condition Name 2', Common_Name__c = 'Condition 2'),
-        new Condition__c(InfermedicaID__c = 'c3', Name = 'Medical Condition Name 3', Common_Name__c = 'Condition 3'),
-        new Condition__c(InfermedicaID__c = 'c4', Name = 'Medical Condition Name 4', Common_Name__c = 'Condition 4'),
-        new Condition__c(InfermedicaID__c = 'c5', Name = 'Medical Condition Name 5', Common_Name__c = 'Condition 5'),
-        new Condition__c(InfermedicaID__c = 'c6', Name = 'Medical Condition Name 6', Common_Name__c = 'Condition 6'),
-        new Condition__c(InfermedicaID__c = 'c7', Name = 'Medical Condition Name 7', Common_Name__c = 'Condition 7'),
-        new Condition__c(InfermedicaID__c = 'c8', Name = 'Medical Condition Name 8', Common_Name__c = 'Condition 8'),
-        new Condition__c(InfermedicaID__c = 'c9', Name = 'Medical Condition Name 9', Common_Name__c = 'Condition 9')
-    };
     
     public List<SelectOption> getListOfStates(){
         List<SelectOption> options = new List<SelectOption>();
@@ -127,18 +104,6 @@ public class EDiagnoseController {
     }
     
     // Diagnosis Module methods
-    private void queryPossibleConditionsDummy() {
-        possibleConditions.clear();
-        List<String> dummyCondApiIds = new List<String>();
-        for (Symptom__c s : patientSymptoms) {
-            dummyCondApiIds.add('c' + s.InfermediaID__c.substring(1, 2));
-        }
-        for (Condition__c c : dummyConditions) {
-            if (dummyCondApiIds.contains(c.InfermedicaID__c)) {
-                possibleConditions.add(c);
-            }
-        }
-    }
     @testVisible
     private void queryPossibleConditionsApi() {
         // This should not be synchronous, but it is easier this way
@@ -212,7 +177,6 @@ public class EDiagnoseController {
         }
     }
     public PageReference symptomChooserContinueToNextPage() {
-        //queryPossibleConditionsDummy();
         queryPossibleConditionsApi();
         return Page.DiagnosisChooser;
     }
@@ -229,14 +193,6 @@ public class EDiagnoseController {
         //TODO: set page reference to suggested doctor module
         return Page.Homepage;
     }
-    private void searchSymptomsDummy() {
-        possibleSymptoms.clear();
-        for (Symptom__c s : dummySymptoms) {
-            if (s.Name.containsIgnoreCase(symptomQuery)) {
-                possibleSymptoms.add(s);
-            }
-        }
-    }
     private void searchSymptomsDatabase() {
         possibleSymptoms.clear();
         // know which field in which object so use SOQL
@@ -252,7 +208,6 @@ public class EDiagnoseController {
         }
     }
     public void searchSymptoms() {
-        //searchSymptomsDummy();
         searchSymptomsDatabase();
     }
     public void addSymptomToList() {
