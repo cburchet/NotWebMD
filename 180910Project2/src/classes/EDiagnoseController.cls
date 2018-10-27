@@ -105,22 +105,18 @@ public class EDiagnoseController {
     
     // Diagnosis Module methods
     @testVisible
-    private void queryPossibleConditionsApi() {
+    // returns true if successful
+    private Boolean queryPossibleConditionsApi() {
         // This should not be synchronous, but it is easier this way
         
         // don't make an api call without valid data
         if (patientSymptoms.size() <= 0) {
-            return;
+            return false;
         }
-        //TODO: use patient sex
         // use 'male' as default sex
-        String querySex = false ? 'female' : 'male';
-        //TODO: use patient age
+        String querySex = gender == 'Female' ? 'female' : 'male';
         // use 20 as default age
-        Integer queryAge = 20;
-        if (queryAge <= 0 || queryAge >= 130) {
-            queryAge = 20;
-        }
+        Integer queryAge = (0 < age && age < 130) ? age : 20;
         
         // create request and set headers
         Http http = new Http();
@@ -174,11 +170,16 @@ public class EDiagnoseController {
                                                         Common_Name__c = commonName,
                                                         InfermedicaID__c = id));
             }
+            return true;
+        } else {
+        	return false;
         }
     }
     public PageReference symptomChooserContinueToNextPage() {
-        queryPossibleConditionsApi();
-        return Page.DiagnosisChooser;
+        if (queryPossibleConditionsApi()) {
+            return Page.DiagnosisChooser;
+        }
+        return null;
     }
     public PageReference diagnosisChooserContinueToNextPage() {
         // set selected condition
@@ -190,25 +191,30 @@ public class EDiagnoseController {
             }
         }
         
-        //TODO: set page reference to suggested doctor module
-        return Page.Homepage;
+        if (patientCondition != null) {
+            return Page.SuggestedDoctor;
+        } else {
+            return null;
+        }
     }
-    private void searchSymptomsDatabase() {
+    public void searchSymptoms() {
         possibleSymptoms.clear();
+        if (symptomQuery.length() <= 0) {
+            return;
+        }
+        // use LIMIT 50 to prevent showing too many results and to stay far below governor limits
         // know which field in which object so use SOQL
         // also avoids needing to show error if only one character in symptomQuery
         /*List<Symptom__c> symptomResults = [FIND :('*' + symptomQuery + '*')
                                             IN NAME FIELDS
-                                            RETURNING Symptom__c(Id, Name, InfermediaID__c)][0];*/
+                                            RETURNING Symptom__c(Id, Name, InfermediaID__c) LIMIT 50][0];*/
         List<Symptom__c> symptomResults = [SELECT Id, Name, InfermediaID__c
                                            FROM Symptom__c
-                                           WHERE Name LIKE :('%' + symptomQuery + '%')];
+                                           WHERE Name LIKE :('%' + symptomQuery + '%')
+                                           LIMIT 50];
         for (Symptom__c s : symptomResults) {
             possibleSymptoms.add(s);
         }
-    }
-    public void searchSymptoms() {
-        searchSymptomsDatabase();
     }
     public void addSymptomToList() {
         String symptomApiId = ApexPages.currentPage().getParameters().get('symptomApiId');
