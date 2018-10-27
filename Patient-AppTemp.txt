@@ -1,0 +1,19 @@
+//Requires 2 formula fields on appointment. One to retrieve the street,city,and state and the other to retrieve phone number. 
+
+Dear {!User.Name},
+This email confirms your appointment with  {!Appointment__c.Doctor__c} on {!Appointment__c.Date__c}. Our office is located at {!Appointment__c.DoctorAddress__c}.
+
+Bring the following document when coming for your appointment:
+
+*Insurance card(s), if applicable. If you are self-paying or have a co-pay, please bring exact change. You may pay by cash, check, or credit card.
+
+*Any government issued ID such as, Drivers license.
+
+To cancel or reschedule your appointment before the scheduled time, please call us at {!Appointment__c.DoctorPhone__c}.
+
+Thank you.
+
+Office Address:
+{!Appointment__c.DoctorAddress__c}
+
+*Note: this is an automated 

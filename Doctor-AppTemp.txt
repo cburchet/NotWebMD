@@ -1,0 +1,17 @@
+
+Dear Dr.{!Appointment__c.Doctor__c}
+An appointment has been made for {!Appointment__c.Contact__c} to see you at your office on: {!Appointment__c.CreatedDate}
+
+Insurance Company: Anthem
+Appointment details: 
+	Condition Name: {!Appointment__c.Condition__c}
+	Patient's Name: {!Appointment__c.Contact__c}
+	Appointment on: {!Appointment__c.CreatedDate}
+
+Contact information:
+	Email id: {!Contact.Email}
+	Phone Number: {!Contact.Phone}
+
+Have a nice day!
+
+*Note this is an automated message*

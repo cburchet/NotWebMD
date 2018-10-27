@@ -1,0 +1,5 @@
+<apex:page controller="BtnSendEmail" >
+   <apex:form >
+       <apex:commandButton value="Btn" action="{!callTwoMethods}"/>
+   </apex:form>
+</apex:page>
