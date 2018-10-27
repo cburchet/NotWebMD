@@ -33,18 +33,19 @@ public class BtnSendEmail {
             app.doctor__c = doc.id;
         	app.condition__c = con.id;
         	app.Date__c = Date.newInstance(2018, 12, 9);
+            
         	
         	insert app;
         	
         // Create Email and Send
        		  Messaging.SingleEmailMessage msg = new Messaging.SingleEmailMessage();
-			  msg.setSaveAsActivity(false);
+			 
        		  EmailTemplate et = [select id from EmailTemplate where developername='DA_Confirm'];
       		  msg.setTemplateId(et.id);
       		  msg.setCcAddresses(new String[] {'revatureplaygroundproject@gmail.com'});
       		  msg.setTargetObjectId(contact.Id);
         	  msg.setWhatId(app.Id);
-      		  msg.setSaveAsActivity(false);
+      		  
         	  Messaging.sendEmail(new Messaging.SingleEmailMessage[] { msg });
         // Deleteing Dummy Data
        		 delete app;
@@ -88,13 +89,13 @@ public class BtnSendEmail {
         	
         
        		  Messaging.SingleEmailMessage msg = new Messaging.SingleEmailMessage();
-			  msg.setSaveAsActivity(false);
-       		  EmailTemplate et = [select id from EmailTemplate where developername='DA_Confirm'];
+			
+       		  EmailTemplate et = [select id from EmailTemplate where developername='PA_Confirm'];
       		  msg.setTemplateId(et.id);
       		  msg.setCcAddresses(new String[] {'revatureplaygroundproject@gmail.com'});
       		  msg.setTargetObjectId(contact.Id);
         	  msg.setWhatId(app.Id);
-      		  msg.setSaveAsActivity(false);
+      		  
         	  Messaging.sendEmail(new Messaging.SingleEmailMessage[] { msg });
         
        		 delete app;
