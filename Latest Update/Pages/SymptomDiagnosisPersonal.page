@@ -1,0 +1,19 @@
+<apex:page controller="EDiagnoseController" standardStylesheets="false" showHeader="false" sidebar="false">
+    <apex:stylesheet value="{!$Resource.SymptomDiagnosisPersonal}"/>
+    <apex:pageBlock >
+            <fieldset>
+                <legend>Patient Information</legend>
+                <h3>
+                    Have you ever used the Symptom Diagnosis machine to diagnose the specific
+                    symptoms which you are currently showing?
+                </h3>
+                <apex:form >
+                        <apex:selectRadio value="{!previousSymptom}" layout="PageDirection" required="true">
+                            <apex:selectOptions value="{!options}"/>
+                        </apex:selectRadio>
+                        <apex:commandButton value="Continue" action="{!toSDPTwo}"/>
+                </apex:form>
+            </fieldset>
+    </apex:pageBlock>
+
+</apex:page>
