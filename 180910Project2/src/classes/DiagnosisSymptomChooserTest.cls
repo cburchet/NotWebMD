@@ -61,7 +61,7 @@ public class DiagnosisSymptomChooserTest {
         EDiagnoseController dc = new EDiagnoseController();
         DiagnosisTestUtility.insertSymptoms();
         dc.searchSymptoms();
-        System.assertEquals(0, dc.possibleSymptoms.size());
+        System.assertNotEquals(0, dc.possibleSymptoms.size());
     }
     
     @isTest
