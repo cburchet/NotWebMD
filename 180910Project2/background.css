@@ -1,0 +1,33 @@
+.moduleContainer {
+    background-color: white;
+}
+
+body {
+    /* this only works in Chrome */
+    animation: background-slideshow 30s linear alternate infinite;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-image: url('../backhealth1.jpg');
+}
+
+@keyframes background-slideshow {
+    0% {
+        background-image: url('../backhealth1.jpg');
+    }
+    20% {
+        background-image: url('../backhealth1.jpg');
+    }
+    30% {
+        background-image: url('../backhealth2.jpg');
+    }
+    70% {
+        background-image: url('../backhealth2.jpg');
+    }
+    80% {
+        background-image: url('../backhealth3.jpg');
+    }
+    100% {
+        background-image: url('../backhealth3.jpg');
+    }
+}
